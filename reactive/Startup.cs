@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using reactive.Application.Activities;
+using reactive.Middleware;
 using reactive.Persistence;
 
 namespace reactive
@@ -53,11 +54,16 @@ namespace reactive
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            // using our custom middleware
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             
             
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+
+            //    app.UseDeveloperExceptionPage();
             }
 
             // app.UseHttpsRedirection();
