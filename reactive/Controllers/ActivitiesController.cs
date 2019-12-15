@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,8 +17,6 @@ namespace reactive.Controllers
     {
         private readonly IMediator _mediator;
 
-        //we need to inject mediatr
-
         public ActivitiesController(IMediator mediator)
         {
             _mediator = mediator;
@@ -32,7 +30,7 @@ namespace reactive.Controllers
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> Details(Guid id)
-          {
+        {
             return await _mediator.Send(new Details.Query { Id = id });
         }
 
@@ -41,5 +39,23 @@ namespace reactive.Controllers
         {
             return await _mediator.Send(command);
         }
+
+        [HttpPut("{id}")]
+
+        public async Task<ActionResult<Unit>> Edit(Guid id,Edit.Command command)
+        {
+            
+                command.Id = id;
+                return await _mediator.Send(command);
+         }
+        
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> Delete(Guid id)
+        {
+            
+            return await _mediator.Send(new Delete.Command { Id = id });
+        }
+
     }
+
 }

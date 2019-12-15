@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using reactive.Domain;
 using reactive.Persistence;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +13,6 @@ namespace reactive.Application.Activities
 {
     public class Create
     {
-
         public class Command : IRequest
         {
             public Guid Id { get; set; }
@@ -23,6 +24,18 @@ namespace reactive.Application.Activities
             public string Venue { get; set; }
         }
 
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Title).NotEmpty();
+                RuleFor(x => x.Description).NotEmpty();
+                RuleFor(x => x.Category).NotEmpty();
+                RuleFor(x => x.Date).NotEmpty();
+                RuleFor(x => x.Venue).NotEmpty();
+                RuleFor(x => x.City).NotEmpty();
+            }
+        }
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
