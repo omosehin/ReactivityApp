@@ -26,7 +26,10 @@ namespace reactive.Application.Activities
             public async Task<List<Activity>> Handle(Query request, 
                 CancellationToken cancellationToken)
             {
-                var activities = await _context.Activities.ToListAsync();
+                var activities = await _context.Activities
+                    .Include(c=>c.UserActivities)
+                    .ThenInclude(c=>c.AppUser)
+                    .ToListAsync();
 
                 return activities;
             }

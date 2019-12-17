@@ -25,6 +25,8 @@ using reactive.Domain;
 using reactive.Infrastructure.Security;
 using reactive.Middleware;
 using reactive.Persistence;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Newtonsoft.Json;
 
 namespace reactive
 {
@@ -83,6 +85,10 @@ namespace reactive
                 });
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
+
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                            .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
