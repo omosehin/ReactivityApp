@@ -1,13 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using reactive.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace reactive.Persistence
 {
-    public class DataContext :DbContext
+    public class DataContext :IdentityDbContext<AppUser>
     {
 
         public DataContext(DbContextOptions options) : base(options)
@@ -19,6 +21,8 @@ namespace reactive.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<Value>()
                 .HasData(
                 new Value { Id = 1, Name ="Value 101" },
