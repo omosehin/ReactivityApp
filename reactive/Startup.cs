@@ -27,6 +27,7 @@ using reactive.Middleware;
 using reactive.Persistence;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
+using AutoMapper;
 
 namespace reactive
 {
@@ -54,6 +55,7 @@ namespace reactive
                 });
             });
             services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddAutoMapper(typeof(List.Handler));
             services.AddMvc(opt =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();

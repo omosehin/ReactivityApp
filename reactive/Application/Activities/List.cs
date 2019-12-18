@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using reactive.Domain;
 using reactive.Persistence;
@@ -13,17 +14,19 @@ namespace reactive.Application.Activities
     public class List
     {
         // IRequest is an interface from mediatr
-        public class Query : IRequest<List<Activity>> { }
+        public class Query : IRequest<List<ActivityDto>> { }
 
-        public class Handler : IRequestHandler<Query, List<Activity>>
+        public class Handler : IRequestHandler<Query, List<ActivityDto>>
         {
             private readonly DataContext _context;
+            private readonly IMapper _mapper;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context,IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
-            public async Task<List<Activity>> Handle(Query request, 
+            public async Task<List<ActivityDto>> Handle(Query request, 
                 CancellationToken cancellationToken)
             {
                 var activities = await _context.Activities
@@ -31,7 +34,7 @@ namespace reactive.Application.Activities
                     .ThenInclude(c=>c.AppUser)
                     .ToListAsync();
 
-                return activities;
+                return _mapper.Map<List<Activity>,List<ActivityDto>>(activities);
             }
         }
     }
