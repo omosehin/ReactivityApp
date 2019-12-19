@@ -30,8 +30,6 @@ namespace reactive.Application.Activities
                 CancellationToken cancellationToken)
             {
                 var activities = await _context.Activities
-                    .Include(c=>c.UserActivities)
-                    .ThenInclude(c=>c.AppUser)
                     .ToListAsync();
 
                 return _mapper.Map<List<Activity>,List<ActivityDto>>(activities);
