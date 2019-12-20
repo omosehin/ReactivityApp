@@ -15,5 +15,7 @@ namespace reactive.Domain
         public string City { get; set; }
         public string Venue { get; set; }
         public virtual ICollection<UserActivity> UserActivities { get; set; } //virtual to allow lazy loading
+        public virtual ICollection<Comment> Comments { get; set; }
+
     }
 }

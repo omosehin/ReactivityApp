@@ -15,7 +15,7 @@ namespace reactive.Application.Activities
 {
     public class Create
     {
-        public class Command : IRequest
+        public class CommandDto : IRequest
         {
             public Guid Id { get; set; }
             public string Title { get; set; }
@@ -26,7 +26,7 @@ namespace reactive.Application.Activities
             public string Venue { get; set; }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
+        public class CommandValidator : AbstractValidator<CommandDto>
         {
             public CommandValidator()
             {
@@ -38,7 +38,7 @@ namespace reactive.Application.Activities
                 RuleFor(x => x.City).NotEmpty();
             }
         }
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<CommandDto>
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
@@ -48,7 +48,7 @@ namespace reactive.Application.Activities
                 _context = context;
                 _userAccessor = userAccessor;
             }
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CommandDto request, CancellationToken cancellationToken)
             {
                 var activity = new Activity
                 {

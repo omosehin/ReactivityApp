@@ -31,7 +31,7 @@ namespace reactive.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Unit>> Create(Create.Command command)
+        public async Task<ActionResult<Unit>> Create(Create.CommandDto command)
         {
             return await Mediator.Send(command);
         }

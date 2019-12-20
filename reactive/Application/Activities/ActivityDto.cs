@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using reactive.Application.Comments;
 using reactive.Domain;
 using System;
 using System.Collections.Generic;
@@ -21,5 +22,6 @@ namespace reactive.Application.Activities
 
         [JsonProperty("attendees")] //when we return this is going to be named as attendees
         public ICollection<AttendeeDto> UserActivities { get; set; }
+        public ICollection<CommentDto> Comments { get; set; }
     }
 }
