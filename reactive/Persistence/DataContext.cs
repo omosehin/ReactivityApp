@@ -21,6 +21,8 @@ namespace reactive.Persistence
 
         public DbSet<UserActivity> UserActivities { get; set; }
 
+        public DbSet<Photo> Photos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

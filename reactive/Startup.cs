@@ -28,6 +28,8 @@ using reactive.Persistence;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
 using AutoMapper;
+using reactive.Infrastructure.Photos;
+using reactive.Application.Photos;
 
 namespace reactive
 {
@@ -96,6 +98,11 @@ namespace reactive
                 });
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            // services.AddScoped(typeof(IPhotoAccessor), typeof(PhotoAccessor));
+
+
+            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary")); //this is the name we set in our secret key
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
                             .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
